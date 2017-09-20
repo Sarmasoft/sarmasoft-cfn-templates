@@ -1,0 +1,197 @@
+{
+    "AWSTemplateFormatVersion": "2010-09-09",
+    "Parameters": {
+        "ParmMXRecordValue": {
+            "Type": "String"
+        }
+    },
+    "Resources": {
+        "R53HZROOT": {
+            "Type": "AWS::Route53::HostedZone",
+            "Properties": {
+                "Name": "sarmasoft.com",
+                "HostedZoneConfig": {
+                    "Comment": "The root hosted zone for sarmasoft.com."
+                },
+                "HostedZoneTags": [
+                    {
+                        "Key": "app",
+                        "Value": "sarmasoft"
+                    }
+                ]
+            }
+        },
+        "R53RSMX": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "sarmasoft.com",
+                "Type": "MX",
+                "ResourceRecords": [
+                    {
+                        "Ref": "ParmMXRecordValue"
+                    }
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEAutoDiscover": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "autodiscover.sarmasoft.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "autodiscover.outlook.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMESip": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "sip.sarmasoft.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "sipdir.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMELyncDiscover": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "lyncdiscover.sarmasoft.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "webdir.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEMsoid": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "msoid.sarmasoft.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "clientconfig.microsoftonline-p.net"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEEnterpriseRegistration": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "enterpriseregistration.sarmasoft.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "enterpriseregistration.windows.net"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSCNAMEEnterpriseEnrollment": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "enterpriseenrollment.sarmasoft.com",
+                "Type": "CNAME",
+                "ResourceRecords": [
+                    "enterpriseenrollment.manage.microsoft.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSTXT": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "sarmasoft.com",
+                "Type": "TXT",
+                "ResourceRecords": [
+                    "\"v=spf1 include:spf.protection.outlook.com -all\""
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSSRVSipTls": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "_sip._tls.sarmasoft.com",
+                "Type": "SRV",
+                "ResourceRecords": [
+                    "100 1 443 sipdir.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        },
+        "R53RSSRVSipTlsTcp": {
+            "Type": "AWS::Route53::RecordSet",
+            "Properties": {
+                "HostedZoneId": {
+                    "Ref": "R53HZROOT"
+                },
+                "Name": "_sipfederationtls._tcp.sarmasoft.com",
+                "Type": "SRV",
+                "ResourceRecords": [
+                    "100 1 5061 sipfed.online.lync.com"
+                ],
+                "TTL": "3600"
+            },
+            "DependsOn": [
+                "R53HZROOT"
+            ]
+        }
+    }
+}
